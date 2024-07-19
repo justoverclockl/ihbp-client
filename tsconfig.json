@@ -10,7 +10,12 @@
     "declaration": true,
     "isolatedModules": true,
     "noEmit": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@client/*": ["./src/client/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]
