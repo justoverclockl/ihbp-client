@@ -9,4 +9,5 @@ export default defineConfig({
     clean: true,
     splitting: true,
     target: 'es2020',
+    outDir: 'lib'
 });

@@ -1,9 +1,9 @@
 import {ClientOptions, PuppeteerOptions} from "@/types/puppeteer.types";
 import puppeteer, {Browser, Page} from "puppeteer";
-import {DEFAULT_CLIENT_OPTIONS, DEFAULT_PUPPETEER_OPTIONS, HIBP_URL} from "@constants/common";
+import {DEFAULT_CLIENT_OPTIONS, DEFAULT_PUPPETEER_OPTIONS, HIBP_URL, HIBP_REFERRER} from "@constants/common";
 import EventEmitter from "node:events";
 
-export class Client extends EventEmitter {
+export class Ihbp extends EventEmitter {
     private readonly puppeteerOptions?: PuppeteerOptions
     private options: ClientOptions
     private page?: Page
@@ -62,7 +62,11 @@ export class Client extends EventEmitter {
         await this.page?.goto(HIBP_URL, {
             waitUntil: 'networkidle0',
             timeout: 0,
-            referer: 'https://google.it/',
+            referer: HIBP_REFERRER,
         })
+    }
+
+    private async waitFor(ms: number): Promise<void> {
+        return new Promise<void>(resolve => setTimeout(() => resolve(), ms));
     }
 }
