@@ -2,6 +2,7 @@ import {ClientOptions, PuppeteerOptions} from "@/types/puppeteer.types";
 import puppeteer, {Browser, Page} from "puppeteer";
 import {DEFAULT_CLIENT_OPTIONS, DEFAULT_PUPPETEER_OPTIONS, HIBP_URL, HIBP_REFERRER} from "@constants/common";
 import EventEmitter from "node:events";
+import { EventListenerCallBack } from '@/types/client.types'
 
 export class Ihbp extends EventEmitter {
     private readonly puppeteerOptions?: PuppeteerOptions
@@ -15,6 +16,10 @@ export class Ihbp extends EventEmitter {
         this.options = { ...DEFAULT_CLIENT_OPTIONS, ...options }
     }
 
+
+    when(event: string, listener: (...args: any[]) => void) {
+        this.on(event, listener)
+    }
 
     async init() {
         await this.initializeBrowser()
@@ -68,5 +73,11 @@ export class Ihbp extends EventEmitter {
 
     private async waitFor(ms: number): Promise<void> {
         return new Promise<void>(resolve => setTimeout(() => resolve(), ms));
+    }
+
+    private onEvent(eventName: string, cb: EventListenerCallBack): this {
+        return this.on(eventName, (...args: any[]) => {
+            cb(...args);
+        });
     }
 }
