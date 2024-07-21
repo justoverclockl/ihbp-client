@@ -35,14 +35,14 @@ export class Password {
 
             if (isResponseAvailable) {
                 await this.waitFor(1500)
-                const messageContent = await page.$eval(this.pwnedMessage, el => el.textContent?.trim() || '');
+                const messageContent: string = await page.$eval(this.pwnedMessage, el => el.textContent?.trim() || '');
+
                 return {
                     isPasswordPwned: true,
                     message: messageContent
                 };
             }
         } catch (error) {
-            console.error('Error in isPasswordPwned:', error);
             return {
                 message: 'An error occurred',
             };
@@ -53,7 +53,7 @@ export class Password {
         return new Promise<void>(resolve => setTimeout(() => resolve(), ms));
     }
 
-    private async isConfirmationMessageInDom(page: Page) {
+    private async isConfirmationMessageInDom(page: Page): Promise<boolean> {
         try {
             return await isElementInDom(page, this.messageContainer)
         } catch (error) {
