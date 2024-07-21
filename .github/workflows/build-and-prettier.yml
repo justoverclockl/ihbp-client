@@ -34,3 +34,6 @@ jobs:
 
       - name: Prettier
         run: ./.github/bin/ci_prettier.sh
+
+      - name: Build
+        run: ./.github/bin/ci_build.sh
