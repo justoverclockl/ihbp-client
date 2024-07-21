@@ -28,7 +28,7 @@ export class Password {
             await page.waitForSelector(this.navLink, { visible: true, timeout: 50000 });
             await page.click(this.navLink);
             await this.waitFor(1000)
-            await page.type(PASSWORD_INPUT, password, { delay: 120 })
+            await page.type(this.pwInput, password, { delay: 120 })
             await page.click(this.pwnedBtn);
 
             const isResponseAvailable: boolean = await this.isConfirmationMessageInDom(page)
@@ -55,7 +55,7 @@ export class Password {
 
     private async isConfirmationMessageInDom(page: Page) {
         try {
-            return await isElementInDom(page, PWNED_MESSAGE_CONTAINER)
+            return await isElementInDom(page, this.messageContainer)
         } catch (error) {
             return false;
         }
