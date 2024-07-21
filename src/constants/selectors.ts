@@ -1,0 +1,5 @@
+export const PASSWORD_NAVBAR_LINK: string = 'a[href="/Passwords"]'
+export const PASSWORD_INPUT: string = 'input[placeholder="password"]'
+export const PWNED_BTN: string = '#searchPwnedPasswords'
+export const PWNED_MESSAGE_CONTAINER: string = '.pwnTitle'
+export const PWNED_MESSAGE_RESULT: string = '#pwnedPasswordResult'

@@ -3,21 +3,24 @@ import puppeteer, {Browser, Page} from "puppeteer";
 import {DEFAULT_CLIENT_OPTIONS, DEFAULT_PUPPETEER_OPTIONS, HIBP_URL, HIBP_REFERRER} from "@constants/common";
 import EventEmitter from "node:events";
 import { EventListenerCallBack } from '@/types/client.types'
+import { Password } from '@pw/Password'
 
 export class Ihbp extends EventEmitter {
     private readonly puppeteerOptions?: PuppeteerOptions
     private options: ClientOptions
     private page?: Page
     private browser?: Browser
+    private password: Password
 
     constructor(options: ClientOptions, puppeteerOptions: Partial<PuppeteerOptions> = {}) {
         super();
         this.puppeteerOptions = {...DEFAULT_PUPPETEER_OPTIONS, ...puppeteerOptions}
         this.options = { ...DEFAULT_CLIENT_OPTIONS, ...options }
+        this.password = new Password()
     }
 
 
-    when(event: string, listener: (...args: any[]) => void) {
+    when(event: string, listener: EventListenerCallBack) {
         this.on(event, listener)
     }
 
@@ -25,6 +28,10 @@ export class Ihbp extends EventEmitter {
         await this.initializeBrowser()
         await this.configurePageOptions()
         await this.navigateToHIBP()
+    }
+
+    protected async isPasswordPwned(password: string) {
+        return await this.password.isPasswordPwned(this.page!, password)
     }
 
     private async initializeBrowser(): Promise<void> {

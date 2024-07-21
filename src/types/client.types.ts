@@ -1,1 +1,1 @@
-export type EventListenerCallBack = (...args: any[]) => any;
+export type EventListenerCallBack = (...args: any[]) => any | void;
