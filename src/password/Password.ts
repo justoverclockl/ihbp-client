@@ -41,10 +41,6 @@ export class Password {
                     message: messageContent
                 };
             }
-
-            return {
-                message: 'Nessun riferimento trovato'
-            }
         } catch (error) {
             console.error('Error in isPasswordPwned:', error);
             return {
