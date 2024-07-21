@@ -8,7 +8,10 @@
   "types": "./src/index.d.ts",
   "scripts": {
     "build": "tsup",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "release:major": "npm version $(semver $npm_package_version -i major) && npm publish --tag latest",
+    "release:minor": "npm version $(semver $npm_package_version -i minor) && npm publish --tag latest",
+    "release:patch": "npm version $(semver $npm_package_version -i patch) && npm publish --tag latest"
   },
   "repository": {
     "type": "git",
@@ -31,6 +34,7 @@
   "devDependencies": {
     "@types/node": "^20.14.11",
     "prettier": "^3.3.3",
+    "semver": "^7.6.3",
     "tsup": "^8.2.0",
     "typescript": "^5.5.3"
   },
