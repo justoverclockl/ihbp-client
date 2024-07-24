@@ -33,4 +33,4 @@ declare class Ihbp extends EventEmitter {
     private onEvent;
 }
 
-export { Ihbp as default };
+export { Ihbp };

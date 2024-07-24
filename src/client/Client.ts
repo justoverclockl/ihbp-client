@@ -3,12 +3,12 @@ import {Browser, Page} from "puppeteer";
 import {DEFAULT_CLIENT_OPTIONS, DEFAULT_PUPPETEER_OPTIONS, HIBP_URL, HIBP_REFERRER} from "@constants/common";
 import EventEmitter from "node:events";
 import { EventListenerCallBack } from '@/types/client.types'
-import { Pwned } from '@pw/pwned'
+import { Pwned } from '@client/pwned'
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import UserAgent from 'user-agents';
 
-class Ihbp extends EventEmitter {
+export class Ihbp extends EventEmitter {
     private readonly puppeteerOptions?: PuppeteerOptions
     private options: ClientOptions
     private page?: Page
@@ -111,5 +111,3 @@ class Ihbp extends EventEmitter {
         });
     }
 }
-
-export default Ihbp
