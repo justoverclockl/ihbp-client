@@ -1,22 +1,27 @@
 import {ClientOptions, PuppeteerOptions} from "@/types/puppeteer.types";
-import puppeteer, {Browser, Page} from "puppeteer";
+import {Browser, Page} from "puppeteer";
 import {DEFAULT_CLIENT_OPTIONS, DEFAULT_PUPPETEER_OPTIONS, HIBP_URL, HIBP_REFERRER} from "@constants/common";
 import EventEmitter from "node:events";
 import { EventListenerCallBack } from '@/types/client.types'
-import { Password } from '@pw/Password'
+import { Pwned } from '@pw/pwned'
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+import UserAgent from 'user-agents';
 
-export class Ihbp extends EventEmitter {
+class Ihbp extends EventEmitter {
     private readonly puppeteerOptions?: PuppeteerOptions
     private options: ClientOptions
     private page?: Page
     private browser?: Browser
-    private password: Password
+    private pwned: Pwned
+    private userAgent: UserAgent
 
     constructor(options: ClientOptions, puppeteerOptions: Partial<PuppeteerOptions> = {}) {
         super();
         this.puppeteerOptions = {...DEFAULT_PUPPETEER_OPTIONS, ...puppeteerOptions}
         this.options = { ...DEFAULT_CLIENT_OPTIONS, ...options }
-        this.password = new Password()
+        this.pwned = new Pwned()
+        this.userAgent = new UserAgent()
     }
 
 
@@ -31,12 +36,19 @@ export class Ihbp extends EventEmitter {
     }
 
     protected async isPasswordPwned(password: string) {
-        return await this.password.isPasswordPwned(this.page!, password)
+        return await this.pwned.isPasswordPwned(this.page!, password)
+    }
+
+    protected async isEmailPwned(email: string) {
+        await this.navigateToHIBP()
+        return await this.pwned.isEmailPwned(this.page!, email)
     }
 
     private async initializeBrowser(): Promise<void> {
         try {
-            this.browser = await puppeteer.launch(this.puppeteerOptions)
+            this.browser = await puppeteer
+                .use(StealthPlugin())
+                .launch(this.puppeteerOptions)
             const pages: Page[] = await this.browser.pages()
             this.page =
                 pages.length > 0 ? pages[0] : await this.browser.newPage()
@@ -53,8 +65,18 @@ export class Ihbp extends EventEmitter {
     private async configurePageOptions(): Promise<void> {
         if (!this.page) return
 
-        if (this.options.userAgent != null) {
-            await this.page.setUserAgent(this.options.userAgent)
+        await this.page.setViewport({
+            width: Math.floor(Math.random() * (1920 - 1366 + 1)) + 1366,
+            height: Math.floor(Math.random() * (1080 - 768 + 1)) + 768,
+            deviceScaleFactor: 1,
+            isMobile: false,
+            hasTouch: false,
+            isLandscape: false,
+        });
+
+        if (this.options.userAgent != null || this.options.userAgent === undefined) {
+            console.log(this.userAgent.random().toString())
+            await this.page.setUserAgent(this.userAgent.random().toString())
         }
 
         if (this.options.proxyAuthentication) {
@@ -78,8 +100,9 @@ export class Ihbp extends EventEmitter {
         })
     }
 
-    private async waitFor(ms: number): Promise<void> {
-        return new Promise<void>(resolve => setTimeout(() => resolve(), ms));
+    private async waitFor(ms: number, minDelay: number, maxDelay: number): Promise<void> {
+        const randomDelay = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min
+        return new Promise<void>(resolve => setTimeout(() => resolve(), randomDelay(minDelay, maxDelay)));
     }
 
     private onEvent(eventName: string, cb: EventListenerCallBack): this {
@@ -88,3 +111,5 @@ export class Ihbp extends EventEmitter {
         });
     }
 }
+
+export default Ihbp

@@ -26,6 +26,8 @@ export type PuppeteerArgs =
     | '--metrics-recording-only'
     | '--mute-audio'
     | '--disable-web-security'
+    | '--auto-open-devtools-for-tabs'
+
 
 export interface PuppeteerOptions {
     headless: boolean

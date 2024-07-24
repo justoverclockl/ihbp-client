@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "module": "lib/index.js",
   "type": "module",
-  "types": "./src/index.d.ts",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsup",
     "format": "npx prettier --write .",
@@ -33,12 +33,16 @@
   "homepage": "https://github.com/justoverclockl/ihbp-client#readme",
   "devDependencies": {
     "@types/node": "^20.14.11",
+    "@types/user-agents": "^1.0.4",
     "prettier": "^3.3.3",
     "semver": "^7.6.3",
     "tsup": "^8.2.0",
     "typescript": "^5.5.3"
   },
   "dependencies": {
-    "puppeteer": "^22.13.1"
+    "puppeteer": "^22.13.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "user-agents": "^1.1.274"
   }
 }

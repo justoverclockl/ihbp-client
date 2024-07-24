@@ -21,5 +21,13 @@ ihbp.init()
 ihbp.when('client ready', async () => {
     const result = await ihbp.isPasswordPwned('myPassword')
     console.log(result.isPasswordPwned) // -> true/false
+    console.log(result)
+    
+    /* response of result
+    {
+        isPasswordPwned: true,
+        message: 'This password has been seen 345 times before'
+    }
+    */
 })
 ```
