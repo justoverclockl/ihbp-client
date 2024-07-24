@@ -11,8 +11,7 @@ password has been pwned directly when a user type a password and give instant fe
 
 ```javascript
 
-import { Ihbp } from './lib/index.js';
-
+import { Ihbp } from "ihbp-client/lib/client/Client.js";
 
 const ihbp = new Ihbp()
 
