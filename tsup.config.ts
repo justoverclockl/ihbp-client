@@ -8,6 +8,8 @@ export default defineConfig({
     skipNodeModulesBundle: true,
     clean: true,
     splitting: false,
+    sourcemap: true,
+    minify: true,
     target: 'es2020',
     outDir: 'lib'
 });
