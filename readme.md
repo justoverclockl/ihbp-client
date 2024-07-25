@@ -1,3 +1,5 @@
+### THIS LIBRARY IS CURRENT IN BETA AND UNDER DEVELOPMENT
+
 ## IHBP - I Have been pwned Client
 
 ## About
