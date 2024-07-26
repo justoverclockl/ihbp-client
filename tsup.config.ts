@@ -11,5 +11,5 @@ export default defineConfig({
     sourcemap: true,
     minify: true,
     target: 'es2020',
-    outDir: 'lib'
+    outDir: 'lib',
 });
