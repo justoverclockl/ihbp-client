@@ -8,8 +8,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsup",
-    "format": "npx prettier --write .",
-    "prepublishOnly": "yarn build"
+    "format": "npx prettier --write ."
   },
   "repository": {
     "type": "git",
