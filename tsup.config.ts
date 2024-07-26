@@ -7,7 +7,7 @@ export default defineConfig({
     shims: true,
     skipNodeModulesBundle: true,
     clean: true,
-    splitting: false,
+    splitting: true,
     sourcemap: true,
     minify: true,
     target: 'es2020',

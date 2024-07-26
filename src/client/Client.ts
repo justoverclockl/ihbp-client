@@ -1,12 +1,12 @@
-import {ClientOptions, PuppeteerOptions} from "@/types/puppeteer.types";
 import {Browser, Page} from "puppeteer";
 import {DEFAULT_CLIENT_OPTIONS, DEFAULT_PUPPETEER_OPTIONS, HIBP_URL, HIBP_REFERRER} from "@constants/common";
 import EventEmitter from "node:events";
-import { EventListenerCallBack } from '@/types/client.types'
 import { Pwned } from '@client/pwned'
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import UserAgent from 'user-agents';
+import { ClientOptions, EventListenerCallBack, PuppeteerOptions } from '../types'
+
 
 export class Ihbp extends EventEmitter {
     private readonly puppeteerOptions?: PuppeteerOptions
