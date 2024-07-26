@@ -13,17 +13,17 @@ password has been pwned directly when a user type a password and give instant fe
 
 ```javascript
 
-import { Ihbp } from "ihbp-client/lib/client/Client.js";
+import { Ihbp } from 'ihbp-client'
 
-const ihbp = new Ihbp()
+const ih = new Ihbp()
 
-ihbp.init()
+ih.init()
 
-ihbp.when('client ready', async () => {
-    const pw = await ihbp.isPasswordPwned('myPassword')
+ih.when('client ready', async () => {
+    const pw = await ih.isPasswordPwned('myPassword')
     console.log(pw.isPasswordPwned) // -> true/false
     console.log(pw)
-    
+
     /* response of pw
     {
         isPasswordPwned: true,
@@ -34,4 +34,6 @@ ihbp.when('client ready', async () => {
     // at moment, the isEmailPwned method is not supported due to cloudflare turnstile protection
     const email = await ihbp.isEmailPwned('testemail@gmail.com')
 })
+
 ```
+

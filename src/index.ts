@@ -1,17 +1,8 @@
-import { Ihbp } from '@client/Client'
-import { Pwned } from '@client/pwned'
-import * as common from './constants/common';
-import * as selectors from './constants/selectors';
-import * as puppeteerTypes from './types/puppeteer.types'
-import * as clientTypes from './types/client.types'
-import * as utils from './utils'
+export * from '@client/Client'
+export * from '@client/pwned'
+export * as common from './constants/common';
+export * as selectors from './constants/selectors';
+export * as puppeteerTypes from './types/puppeteer.types'
+export * as clientTypes from './types/client.types'
+export * as utils from './utils'
 
-export {
-    Ihbp,
-    Pwned,
-    common,
-    selectors,
-    puppeteerTypes,
-    clientTypes,
-    utils
-}
