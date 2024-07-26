@@ -1,24 +1,22 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "noImplicitAny": true,
-    "esModuleInterop": true,
-    "strictNullChecks": true,
-    "target": "ES2022",
-    "moduleResolution": "Node",
+    "target": "ES2020",
     "module": "ESNext",
-    "declaration": true,
-    "isolatedModules": true,
-    "noEmit": true,
+    "moduleResolution": "node",
     "outDir": "./lib",
+    "rootDir": "./src",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src/*"],
-      "@constants/*": ["./src/constants/*"],
-      "@client/*": ["./src/client/*"],
-      "@pw/*": ["./src/password/*"],
-      "@selectors/*": ["./src/constants/*"]
-    }
+      "@client/*": ["client/*"],
+      "@constants/*": ["constants/*"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "resolveJsonModule": true
   },
-  "include": ["src"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "lib"]
 }
