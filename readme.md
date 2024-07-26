@@ -20,15 +20,18 @@ const ihbp = new Ihbp()
 ihbp.init()
 
 ihbp.when('client ready', async () => {
-    const result = await ihbp.isPasswordPwned('myPassword')
-    console.log(result.isPasswordPwned) // -> true/false
-    console.log(result)
+    const pw = await ihbp.isPasswordPwned('myPassword')
+    console.log(pw.isPasswordPwned) // -> true/false
+    console.log(pw)
     
-    /* response of result
+    /* response of pw
     {
         isPasswordPwned: true,
         message: 'This password has been seen 345 times before'
     }
     */
+
+    // at moment, the isEmailPwned method is not supported due to cloudflare turnstile protection
+    const email = await ihbp.isEmailPwned('testemail@gmail.com')
 })
 ```
