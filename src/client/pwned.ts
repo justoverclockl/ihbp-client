@@ -6,7 +6,8 @@ import {
     PWNED_MESSAGE_CONTAINER,
     PWNED_MESSAGE_RESULT, HOME_NAVBAR_LINK, EMAIL_INPUT, EMAIL_BTN, PWNED_EMAIL_RESULT,
 } from '@constants/selectors'
-import { isElementInDom } from '@/utils/elementObserver'
+import { isElementInDom } from '../utils'
+
 
 export class Pwned {
     private readonly navLink: string = PASSWORD_NAVBAR_LINK;
