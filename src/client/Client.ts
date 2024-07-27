@@ -1,7 +1,7 @@
 import {Browser, Page} from "puppeteer";
 import {DEFAULT_CLIENT_OPTIONS, DEFAULT_PUPPETEER_OPTIONS, HIBP_URL, HIBP_REFERRER} from "@constants/common";
 import EventEmitter from "node:events";
-import { Pwned } from '@client/pwned'
+import { Pwned } from '@client/Pwned'
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import UserAgent from 'user-agents';
@@ -25,11 +25,11 @@ export class Ihbp extends EventEmitter {
     }
 
 
-    when(event: string, listener: EventListenerCallBack) {
+    protected when(event: string, listener: EventListenerCallBack) {
         this.on(event, listener)
     }
 
-    async init() {
+    protected async init() {
         await this.initializeBrowser()
         await this.configurePageOptions()
         await this.navigateToHIBP()

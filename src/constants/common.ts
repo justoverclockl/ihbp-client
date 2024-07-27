@@ -1,11 +1,10 @@
-import {ClientOptions, PuppeteerOptions} from "@/types/puppeteer.types";
-
+import { ClientOptions, PuppeteerOptions } from '../types'
 
 export const HIBP_URL: string = 'https://haveibeenpwned.com/'
 export const HIBP_REFERRER: string = 'https://www.google.com/search?q=ihave+been+pwned&oq=ihave+been+pwned&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTINCAEQLhiDARixAxiABDIHCAIQABiABDINCAMQLhjHARjRAxiABDIHCAQQLhiABDIJCAUQABgKGIAEMgcIBhAAGIAEMgcIBxAAGIAEMgcICBAAGIAE0gEIMzkwOWowajeoAgCwAgA&sourceid=chrome&ie=UTF-8'
 
 export const DEFAULT_PUPPETEER_OPTIONS: PuppeteerOptions = {
-    headless: false,
+    headless: true,
     defaultViewport: null,
     args: [
         '--no-sandbox',
