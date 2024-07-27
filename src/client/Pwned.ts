@@ -56,7 +56,7 @@ export class Pwned {
             const isResponseAvailable: boolean = await this.isConfirmationMessageInDom(page, this.messageContainer)
 
             if (isResponseAvailable) {
-                await this.waitFor(1000, 2000)
+                await this.waitFor(1500, 2500)
                 const messageContent: string = await page.$eval(this.pwnedMessage, el => el.textContent?.trim() || '');
 
                 return {
