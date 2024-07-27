@@ -1,6 +1,6 @@
 {
   "name": "ihbp-client",
-  "version": "0.0.0-development",
+  "version": "0.1.0",
   "description": "A NodeJs library that interact with haveibeenpwned website using puppeteer and expose easy methods for Javascript apps.",
   "main": "./lib/index.js",
   "module": "./lib/index.mjs",
