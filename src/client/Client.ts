@@ -81,7 +81,6 @@ export class Ihbp extends EventEmitter {
         });
 
         if (this.options.userAgent != null || this.options.userAgent === undefined) {
-            console.log(this.userAgent.random().toString())
             await this.page.setUserAgent(this.userAgent.random().toString())
         }
 
