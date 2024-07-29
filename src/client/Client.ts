@@ -8,7 +8,7 @@ import UserAgent from 'user-agents';
 import {
     ClientOptions,
     ErrorMessageType,
-    EventListenerCallBack,
+    EventListenerCallBack, EventsType,
     IsEmailPwnedResultType, IsPwPwnedResultType,
     PuppeteerOptions,
 } from '../types'
@@ -60,10 +60,10 @@ export class Ihbp extends EventEmitter {
                 pages.length > 0 ? pages[0] : await this.browser.newPage()
 
             if (this.browser && this.page) {
-                this.emit('client ready')
+                this.emit(EventsType.CLIENT_READY)
             }
         } catch (error) {
-            this.emit('client crashed')
+            this.emit(EventsType.CLIENT_CRASHED)
             throw error
         }
     }
