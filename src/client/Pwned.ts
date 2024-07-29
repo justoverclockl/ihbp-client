@@ -7,6 +7,7 @@ import {
     PWNED_MESSAGE_RESULT, HOME_NAVBAR_LINK, EMAIL_INPUT, EMAIL_BTN, PWNED_EMAIL_RESULT,
 } from '@constants/selectors'
 import { isElementInDom } from '../utils'
+import { ErrorMessageType, IsEmailPwnedResultType, IsPwPwnedResultType } from '../types'
 
 
 export class Pwned {
@@ -22,7 +23,7 @@ export class Pwned {
 
     constructor() {}
 
-    async isEmailPwned(page: Page, email: string) {
+    async isEmailPwned(page: Page, email: string): Promise<IsEmailPwnedResultType | ErrorMessageType | undefined> {
         try {
             await page.type(this.emailInput, email, { delay: 120 })
             await page.click(this.searchPwnageBtn)
@@ -41,11 +42,12 @@ export class Pwned {
         } catch (error) {
             return {
                 message: 'An error occurred',
+                errorMessage: error instanceof Error ? error.message : String(error)
             };
         }
     }
 
-    async isPasswordPwned(page: Page, password: string) {
+    async isPasswordPwned(page: Page, password: string): Promise<IsPwPwnedResultType | ErrorMessageType | undefined> {
         try {
             await page.waitForSelector(this.navLink, { visible: true, timeout: 50000 });
             await page.click(this.navLink);
@@ -67,6 +69,7 @@ export class Pwned {
         } catch (error) {
             return {
                 message: 'An error occurred',
+                errorMessage: error instanceof Error ? error.message : String(error)
             };
         }
     }

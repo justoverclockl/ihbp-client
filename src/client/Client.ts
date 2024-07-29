@@ -5,7 +5,13 @@ import { Pwned } from '@client/Pwned'
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import UserAgent from 'user-agents';
-import { ClientOptions, EventListenerCallBack, PuppeteerOptions } from '../types'
+import {
+    ClientOptions,
+    ErrorMessageType,
+    EventListenerCallBack, EventsType,
+    IsEmailPwnedResultType, IsPwPwnedResultType,
+    PuppeteerOptions,
+} from '../types'
 
 
 export class Ihbp extends EventEmitter {
@@ -35,11 +41,11 @@ export class Ihbp extends EventEmitter {
         await this.navigateToHIBP()
     }
 
-    protected async isPasswordPwned(password: string) {
+    protected async isPasswordPwned(password: string): Promise<IsPwPwnedResultType | ErrorMessageType | undefined> {
         return await this.pwned.isPasswordPwned(this.page!, password)
     }
 
-    protected async isEmailPwned(email: string) {
+    protected async isEmailPwned(email: string): Promise<IsEmailPwnedResultType | ErrorMessageType | undefined> {
         await this.navigateToHIBP()
         return await this.pwned.isEmailPwned(this.page!, email)
     }
@@ -54,10 +60,10 @@ export class Ihbp extends EventEmitter {
                 pages.length > 0 ? pages[0] : await this.browser.newPage()
 
             if (this.browser && this.page) {
-                this.emit('client ready')
+                this.emit(EventsType.CLIENT_READY)
             }
         } catch (error) {
-            this.emit('client crashed')
+            this.emit(EventsType.CLIENT_CRASHED)
             throw error
         }
     }
@@ -75,7 +81,6 @@ export class Ihbp extends EventEmitter {
         });
 
         if (this.options.userAgent != null || this.options.userAgent === undefined) {
-            console.log(this.userAgent.random().toString())
             await this.page.setUserAgent(this.userAgent.random().toString())
         }
 

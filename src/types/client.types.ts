@@ -6,13 +6,18 @@ import UserAgent from 'user-agents'
 
 export type EventListenerCallBack = (...args: any[]) => any | void;
 
+export type ErrorMessageType = {
+    message: string
+    errorMessage: string | unknown
+}
+
 export type IsPwPwnedResultType = {
     isPasswordPwned: boolean
     message: string
 }
 
 export type IsEmailPwnedResultType = {
-    isPasswordPwned: boolean
+    isEmailPwned: boolean
     message: string
 }
 
