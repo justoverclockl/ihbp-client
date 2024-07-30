@@ -33,11 +33,11 @@ export declare class Ihbp extends EventEmitter {
 
     when(event: string, listener: EventListenerCallBack): void;
 
-    protected init(): Promise<void>;
+    public init(): Promise<void>;
 
-    protected isPasswordPwned(password: string): Promise<IsPwPwnedResultType>;
+    public isPasswordPwned(password: string): Promise<IsPwPwnedResultType>;
 
-    protected isEmailPwned(email: string): Promise<IsEmailPwnedResultType>;
+    public isEmailPwned(email: string): Promise<IsEmailPwnedResultType>;
 
     private initializeBrowser(): Promise<void>;
 

@@ -31,21 +31,21 @@ export class Ihbp extends EventEmitter {
     }
 
 
-    protected when(event: string, listener: EventListenerCallBack) {
+    public when(event: string, listener: EventListenerCallBack) {
         this.on(event, listener)
     }
 
-    protected async init() {
+    public async init() {
         await this.initializeBrowser()
         await this.configurePageOptions()
         await this.navigateToHIBP()
     }
 
-    protected async isPasswordPwned(password: string): Promise<IsPwPwnedResultType | ErrorMessageType | undefined> {
+    public async isPasswordPwned(password: string): Promise<IsPwPwnedResultType | ErrorMessageType | undefined> {
         return await this.pwned.isPasswordPwned(this.page!, password)
     }
 
-    protected async isEmailPwned(email: string): Promise<IsEmailPwnedResultType | ErrorMessageType | undefined> {
+    public async isEmailPwned(email: string): Promise<IsEmailPwnedResultType | ErrorMessageType | undefined> {
         await this.navigateToHIBP()
         return await this.pwned.isEmailPwned(this.page!, email)
     }
