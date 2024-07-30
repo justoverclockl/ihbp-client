@@ -43,9 +43,9 @@ declare class Ihbp extends EventEmitter {
     private userAgent;
     constructor(options: ClientOptions, puppeteerOptions?: Partial<PuppeteerOptions>);
     when(event: string, listener: EventListenerCallBack): void;
-    protected init(): Promise<void>;
-    protected isPasswordPwned(password: string): Promise<IsPwPwnedResultType>;
-    protected isEmailPwned(email: string): Promise<IsEmailPwnedResultType>;
+    init(): Promise<void>;
+    isPasswordPwned(password: string): Promise<IsPwPwnedResultType>;
+    isEmailPwned(email: string): Promise<IsEmailPwnedResultType>;
     private initializeBrowser;
     private configurePageOptions;
     private navigateToHIBP;
