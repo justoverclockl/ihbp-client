@@ -28,6 +28,7 @@ export declare class Ihbp extends EventEmitter {
     private browser?: Browser;
     private pwned: Pwned;
     private userAgent: UserAgent;
+    private isClientDestroyed: boolean;
 
     constructor(options: ClientOptions, puppeteerOptions?: Partial<PuppeteerOptions>);
 
@@ -44,6 +45,8 @@ export declare class Ihbp extends EventEmitter {
     private configurePageOptions(): Promise<void>;
 
     private navigateToHIBP(): Promise<void>;
+
+    private destroy(): Promise<void>;
 
     private waitFor(ms: number, minDelay: number, maxDelay: number): Promise<void>;
 
