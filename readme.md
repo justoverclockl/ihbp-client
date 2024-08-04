@@ -19,6 +19,10 @@ const ih = new Ihbp()
 
 ih.init()
 
+ih.when('client_crashed', (error) => {
+    console.log(error)
+})
+
 ih.when('client ready', async () => {
     const pw = await ih.isPasswordPwned('myPassword')
     console.log(pw.isPasswordPwned) // -> true/false
@@ -37,3 +41,42 @@ ih.when('client ready', async () => {
 
 ```
 
+## Or you can use a function to use and destroy the client
+
+```javascript
+
+import { Ihbp } from 'ihbp-client'
+
+// Function to initialize and use the Ihbp client
+async function useIhbp() {
+    const ihbp = new Ihbp();
+
+    ihbp.when('client_ready', async () => {
+        try {
+            const pw = await ihbp.isPasswordPwned('myPassword');
+            console.log(pw);
+        } catch (error) {
+            console.error('Error checking password:', error);
+        }
+    });
+
+    try {
+        await ihbp.init();
+    } catch (error) {
+        console.error('Failed to initialize Ihbp client:', error);
+    }
+
+    // Destroy the client after usage if needed
+    try {
+        await ihbp.destroy();
+    } catch (error) {
+        console.error('Failed to destroy Ihbp client:', error);
+    }
+}
+
+// Example usage
+useIhbp()
+    .then(() => console.log('Ihbp client used successfully'))
+    .catch((error) => console.error('Error in Ihbp client usage:', error));
+
+```
