@@ -1,4 +1,4 @@
-import {Browser, Page} from "puppeteer";
+import { Browser, Page, PuppeteerLaunchOptions } from 'puppeteer'
 import {DEFAULT_CLIENT_OPTIONS, DEFAULT_PUPPETEER_OPTIONS, HIBP_URL, HIBP_REFERRER} from "@constants/common";
 import EventEmitter from "node:events";
 import { Pwned } from '@client/Pwned'
@@ -15,12 +15,13 @@ import {
 
 
 export class Ihbp extends EventEmitter {
-    private readonly puppeteerOptions?: PuppeteerOptions
+    private readonly puppeteerOptions?: PuppeteerOptions & PuppeteerLaunchOptions
     private options: ClientOptions
     private page?: Page
     private browser?: Browser
     private pwned: Pwned
     private userAgent: UserAgent
+    private isClientDestroyed: boolean = false
 
     constructor(options: ClientOptions, puppeteerOptions: Partial<PuppeteerOptions> = {}) {
         super();
@@ -31,21 +32,26 @@ export class Ihbp extends EventEmitter {
     }
 
 
-    protected when(event: string, listener: EventListenerCallBack) {
+    public when(event: string, listener: EventListenerCallBack) {
         this.on(event, listener)
     }
 
-    protected async init() {
+    public async init() {
+        if (this.isClientDestroyed) {
+            throw new Error('Cannot initialize a destroyed client. Please create a new instance.');
+        }
+
         await this.initializeBrowser()
         await this.configurePageOptions()
         await this.navigateToHIBP()
     }
 
-    protected async isPasswordPwned(password: string): Promise<IsPwPwnedResultType | ErrorMessageType | undefined> {
+    public async isPasswordPwned(password: string): Promise<IsPwPwnedResultType | ErrorMessageType | undefined> {
+        if (this.isClientDestroyed) throw new Error('Client has been destroyed.');
         return await this.pwned.isPasswordPwned(this.page!, password)
     }
 
-    protected async isEmailPwned(email: string): Promise<IsEmailPwnedResultType | ErrorMessageType | undefined> {
+    public async isEmailPwned(email: string): Promise<IsEmailPwnedResultType | ErrorMessageType | undefined> {
         await this.navigateToHIBP()
         return await this.pwned.isEmailPwned(this.page!, email)
     }
@@ -63,7 +69,7 @@ export class Ihbp extends EventEmitter {
                 this.emit(EventsType.CLIENT_READY)
             }
         } catch (error) {
-            this.emit(EventsType.CLIENT_CRASHED)
+            this.emit(EventsType.CLIENT_CRASHED, error)
             throw error
         }
     }
@@ -103,6 +109,24 @@ export class Ihbp extends EventEmitter {
             timeout: 0,
             referer: HIBP_REFERRER,
         })
+    }
+
+    private async destroy(): Promise<void> {
+        try {
+            this.emit(EventsType.CLIENT_DESTROY_INIT)
+
+            if (this.browser) {
+                await this.browser.close()
+                this.browser = undefined
+                this.page = undefined
+            }
+
+            this.isClientDestroyed = true
+            this.removeAllListeners()
+            this.emit(EventsType.CLIENT_DESTROYED)
+        } catch (error) {
+            this.emit(EventsType.CLIENT_CRASHED, error)
+        }
     }
 
     private async waitFor(ms: number, minDelay: number, maxDelay: number): Promise<void> {
